@@ -1,27 +1,95 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import ReviewChart from "../components/ReviewChart.jsx";
+import { getCollection } from "astro:content";
+
+// 1. OBTENER DATOS REALES
+const allReviews = await getCollection("reviews");
+
+// 2. CÁLCULOS MATEMÁTICOS
+
+// A) Total de películas
+const totalMovies = allReviews.length;
+
+// B) Nota Media
+const totalScore = allReviews.reduce((acc, post) => acc + post.data.rating, 0);
+const averageRating =
+	totalMovies > 0 ? (totalScore / totalMovies).toFixed(1) : 0;
+
+// C) Horas Totales (¡NUEVO!) 🕒
+// Sumamos los minutos de cada post (si no tiene, sumamos 0)
+const totalMinutes = allReviews.reduce(
+	(acc, post) => acc + (post.data.duration || 0),
+	0,
+);
+// Convertimos a horas (redondeando)
+const totalHours = Math.round(totalMinutes / 60);
+
+// D) Datos para el Gráfico
+const chartData = [
+	{ name: "1 ★", cantidad: 0 },
+	{ name: "2 ★", cantidad: 0 },
+	{ name: "3 ★", cantidad: 0 },
+	{ name: "4 ★", cantidad: 0 },
+	{ name: "5 ★", cantidad: 0 },
+];
+
+allReviews.forEach((post) => {
+	const rating = Math.round(post.data.rating);
+	if (rating >= 1 && rating <= 5) {
+		chartData[rating - 1].cantidad += 1;
+	}
+});
 ---
 
-<Layout title="Estadísticas">
-	<main>
-		<h1>Estadísticas</h1>
-		<p>Gráficos y datos interesantes.</p>
-	</main>
-</Layout>
+<Layout title="Estadísticas | Lo veo y te digo">
+	<section class="mb-12">
+		<h1
+			class="font-serif text-4xl font-bold text-gray-900 dark:text-white mb-4"
+		>
+			Mis Estadísticas
+		</h1>
+		<p class="text-gray-600 dark:text-gray-400 max-w-2xl text-lg">
+			Resumen basado en las {totalMovies} reseñas publicadas hasta ahora.
+		</p>
+	</section>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-    h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		text-align: center;
-	}
-</style>
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+		<div class="bg-cine-gold p-6 rounded-xl shadow-md text-center">
+			<span class="block text-4xl font-bold mb-2">{totalMovies}</span>
+			<span class="text-sm font-bold uppercase tracking-widest opacity-80"
+				>Películas Vistas</span
+			>
+		</div>
+
+		<div
+			class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl text-center border border-gray-200 dark:border-gray-700"
+		>
+			<span
+				class="block text-4xl font-bold mb-2 text-gray-900 dark:text-white"
+				>{totalHours}</span
+			>
+			<span
+				class="text-sm font-bold uppercase tracking-widest text-gray-500"
+				>Horas Totales</span
+			>
+		</div>
+
+		<div
+			class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl text-center border border-gray-200 dark:border-gray-700"
+		>
+			<span
+				class="block text-4xl font-bold mb-2 text-gray-900 dark:text-white"
+				>{averageRating}</span
+			>
+			<span
+				class="text-sm font-bold uppercase tracking-widest text-gray-500"
+				>Nota Media</span
+			>
+		</div>
+	</div>
+
+	<div class="max-w-4xl mx-auto">
+		<ReviewChart client:visible data={chartData} />
+	</div>
+</Layout>

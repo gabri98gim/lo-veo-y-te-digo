@@ -5,6 +5,7 @@ year: 2024
 rating: 5
 poster: "https://images.mubicdn.net/images/film/332868/cache-966973-1745502662/image-w1280.jpg?size=800x" 
 tags: ["Terror", "Body Horror", "Demi Moore"]
+duration: 120
 draft: false
 ---
 

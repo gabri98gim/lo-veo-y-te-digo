@@ -10,6 +10,7 @@ const reviews = defineCollection({
         poster: z.string(), // URL o ruta de la imagen
         tags: z.array(z.string()), // Ej: ['Sci-Fi', 'Villeneuve']
         draft: z.boolean().default(false), // Para borradores que no quieras publicar aún
+        duration: z.number().optional(),
     }),
 });
 

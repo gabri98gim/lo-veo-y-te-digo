@@ -1,27 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import ContactForm from "../components/ContactForm.jsx";
 ---
 
-<Layout title="Contacto">
-	<main>
-		<h1>Contacto</h1>
-		<p>Formulario de contacto o información.</p>
-	</main>
-</Layout>
+<Layout title="Contacto | Lo veo y te digo">
+	<section class="max-w-4xl mx-auto">
+		<div class="text-center mb-16">
+			<h1
+				class="font-serif text-5xl font-bold text-gray-900 dark:text-white mb-6"
+			>
+				Hablemos de Cine
+			</h1>
+			<p
+				class="text-xl text-gray-600 dark:text-gray-400 font-serif italic"
+			>
+				¿Alguna recomendación? ¿O quieres debatir sobre ese final
+				abierto?
+			</p>
+		</div>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-    h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		text-align: center;
-	}
-</style>
+		<ContactForm client:load />
+	</section>
+</Layout>

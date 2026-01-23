@@ -1,27 +1,100 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+
+// Datos "Hardcoded" para tu Top de la historia
+// (Aquí pones tus favoritas de verdad, independientemente de si tienes review o no)
+const topMovies = [
+	{
+		rank: 1,
+		title: "El Padrino",
+		year: 1972,
+		image: "https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+		quote: "Le haré una oferta que no podrá rechazar.",
+		style: "col-span-1 md:col-span-2 md:row-span-2", // EL GRANDE (Cuadrado gigante)
+	},
+	{
+		rank: 2,
+		title: "El Caballero Oscuro",
+		year: 2008,
+		image: "https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+		quote: "O mueres como un héroe, o vives lo suficiente para verte convertido en villano.",
+		style: "col-span-1 md:col-span-1", // Normal vertical
+	},
+	{
+		rank: 3,
+		title: "Pulp Fiction",
+		year: 1994,
+		image: "https://image.tmdb.org/t/p/original/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
+		quote: "Hamburguesas, la piedra angular de todo desayuno nutritivo.",
+		style: "col-span-1 md:col-span-1", // Normal vertical
+	},
+	{
+		rank: 4,
+		title: "Interstellar",
+		year: 2014,
+		image: "https://image.tmdb.org/t/p/original/gEU2QniL6C971PNTi7ZQ0ur4hcI.jpg",
+		quote: "El amor es lo único que somos capaces de percibir que trasciende las dimensiones del tiempo y del espacio.",
+		style: "col-span-1 md:col-span-2", // Ancho (Panorámico)
+	},
+];
 ---
 
-<Layout title="Hall of Fame">
-	<main>
-		<h1>Hall of Fame</h1>
-		<p>Animaciones y destacados.</p>
-	</main>
-</Layout>
+<Layout title="Hall of Fame | Lo veo y te digo">
+	<div class="text-center mb-16">
+		<h1
+			class="font-serif text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cine-gold to-yellow-600 mb-4 py-2"
+		>
+			MI HALL OF FAME
+		</h1>
+		<p
+			class="text-gray-600 dark:text-gray-400 uppercase tracking-[0.2em] text-sm"
+		>
+			Mis películas favoritas
+		</p>
+	</div>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-    h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		text-align: center;
-	}
-</style>
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[300px]">
+		{
+			topMovies.map((movie) => (
+				<div
+					class={`relative group overflow-hidden rounded-2xl ${movie.style}`}
+				>
+					<img
+						src={movie.image}
+						alt={movie.title}
+						class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+					/>
+
+					<div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+
+					<div class="absolute bottom-0 left-0 p-6 w-full translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+						<span class="text-cine-gold font-bold text-6xl opacity-20 absolute -top-10 left-4 z-0">
+							#{movie.rank}
+						</span>
+						<div class="relative z-10">
+							<h3 class="text-white text-3xl font-serif font-bold leading-none mb-2">
+								{movie.title}
+							</h3>
+							<p class="text-gray-300 text-sm italic border-l-2 border-cine-gold pl-3">
+								"{movie.quote}"
+							</p>
+						</div>
+					</div>
+				</div>
+			))
+		}
+	</div>
+
+	<div
+		class="mt-20 max-w-2xl mx-auto text-center border-t border-gray-200 dark:border-gray-800 pt-12"
+	>
+		<h3 class="text-xl font-bold mb-6 font-serif">Menciones Honoríficas</h3>
+		<ul
+			class="space-y-2 text-gray-600 dark:text-gray-400 font-serif italic"
+		>
+			<li>El viaje de Chihiro (2001)</li>
+			<li>Ciudad de Dios (2002)</li>
+			<li>Blade Runner (1982)</li>
+		</ul>
+	</div>
+</Layout>
