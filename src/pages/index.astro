@@ -1,38 +1,33 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import CardPelicula from "../components/CardPelicula.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const allReviews = await getCollection("reviews");
 ---
 
-<Layout title="Inicio - Blog">
-	<main>
-		<h1>Bienvenido a <span class="text-gradient">Mi Blog</span></h1>
-		<p class="instructions">
-			Aquí irán los artículos.
-		</p>
-	</main>
-</Layout>
+<Layout title="Lo veo y te digo | Reseñas de Cine">
+	<h2
+		class="font-serif text-2xl font-bold mb-8 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 pb-2"
+	>
+		Últimas Reseñas
+	</h2>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 800px;
-		max-width: calc(100% - 2rem);
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: 1em;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-</style>
+	<div
+		class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
+	>
+		{
+			allReviews.map((post) => (
+				<CardPelicula
+					title={post.data.title}
+					filmTitle={post.data.filmTitle}
+					year={post.data.year}
+					rating={post.data.rating}
+					poster={post.data.poster}
+					slug={post.id}
+				/>
+			))
+		}
+	</div>
+</Layout>

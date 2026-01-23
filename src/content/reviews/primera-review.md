@@ -3,7 +3,7 @@ title: "La Sustancia: El horror corporal llevado al límite"
 filmTitle: "The Substance"
 year: 2024
 rating: 5
-poster: "https://image.tmdb.org/t/p/w500/lD7M84u599h03y5s5e5w5.jpg" 
+poster: "https://images.mubicdn.net/images/film/332868/cache-966973-1745502662/image-w1280.jpg?size=800x" 
 tags: ["Terror", "Body Horror", "Demi Moore"]
 draft: false
 ---

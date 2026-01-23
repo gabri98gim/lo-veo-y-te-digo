@@ -1,61 +1,37 @@
 ---
-interface Props {
-	title: string;
-	body: string;
-	href: string;
-}
-
-const { href, title, body } = Astro.props;
+const { title, filmTitle, year, rating, poster, slug } = Astro.props;
 ---
 
-<li class="link-card">
-	<a href={href}>
-		<h2>
+<a href={`/reviews/${slug}`} class="group flex flex-col gap-3 mb-8">
+	<div
+		class="relative w-full aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800"
+	>
+		<img
+			src={poster}
+			alt={`Imagen de ${filmTitle}`}
+			class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+		/>
+
+		<div
+			class="absolute bottom-0 right-0 bg-cine-black text-white text-xs font-bold px-2 py-1"
+		>
+			{rating}/5 ★
+		</div>
+	</div>
+
+	<div class="flex flex-col gap-1">
+		<h3
+			class="text-lg font-bold leading-tight text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors"
+		>
 			{title}
-			<span>&rarr;</span>
-		</h2>
-		<p>
-			{body}
-		</p>
-	</a>
-</li>
-<style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 1px;
-		background-color: #23262d;
-		background-image: none;
-		background-size: 400%;
-		border-radius: 7px;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-	}
-	.link-card > a {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: calc(1.5rem - 1px);
-		border-radius: 8px;
-		color: white;
-		background-color: #23262d;
-		opacity: 0.8;
-	}
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-	}
-	p {
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-	}
-	.link-card:is(:hover, :focus-within) {
-		background-position: 0;
-		background-image: var(--accent-gradient);
-	}
-	.link-card:is(:hover, :focus-within) h2 {
-		color: rgb(var(--accent-light));
-	}
-</style>
+		</h3>
+
+		<div
+			class="flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-500"
+		>
+			<span>POR GABRI</span>
+			<span class="mx-2">•</span>
+			<span>{year}</span>
+		</div>
+	</div>
+</a>

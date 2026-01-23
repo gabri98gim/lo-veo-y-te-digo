@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+// 1. Importamos el tipo para que TypeScript no se queje
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+    const reviews = await getCollection("reviews");
+    // 2. Le decimos explícitamente que 'post' es una review
+    return reviews.map((post: CollectionEntry<"reviews">) => ({
+        params: { id: post.id },
+        props: { post },
+    }));
+}
+
+// 3. Definimos las Props para que VS Code sepa qué es 'post'
+interface Props {
+    post: CollectionEntry<"reviews">;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} - Reseña`} />
