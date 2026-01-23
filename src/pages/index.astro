@@ -18,16 +18,18 @@ const allReviews = await getCollection("reviews");
 		class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
 	>
 		{
-			allReviews.map((post) => (
-				<CardPelicula
-					title={post.data.title}
-					filmTitle={post.data.filmTitle}
-					year={post.data.year}
-					rating={post.data.rating}
-					poster={post.data.poster}
-					slug={post.id}
-				/>
-			))
-		}
+      allReviews.map((post) => (
+        <CardPelicula
+          title={post.data.title}
+          filmTitle={post.data.filmTitle}
+          year={post.data.year}
+          rating={post.data.rating}
+          /* 👇 AQUÍ ESTÁ EL CAMBIO: */
+          /* Si hay 'cover' (horizontal) úsala, si no, usa 'poster' (vertical) */
+          poster={post.data.cover ? post.data.cover : post.data.poster}
+          slug={post.id}
+        />
+      ))
+    }
 	</div>
 </Layout>

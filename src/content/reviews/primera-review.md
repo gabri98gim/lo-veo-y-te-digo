@@ -1,14 +1,19 @@
 ---
-title: "La Sustancia: El horror corporal llevado al límite"
-filmTitle: "The Substance"
-year: 2024
-rating: 5
-poster: "https://images.mubicdn.net/images/film/332868/cache-966973-1745502662/image-w1280.jpg?size=800x" 
-tags: ["Terror", "Body Horror", "Demi Moore"]
-duration: 120
+title: "28 Años Después: El miedo es la nueva fe"
+filmTitle: "28 Years Later"
+year: 2026
+rating: 4
+poster: "https://i.redd.it/1gto228k8bze1.jpeg"
+tags: ["Terror", "Zombies", "Danny Boyle"]
+duration: 115
 draft: false
+cover: "https://www.ecartelera.com/images/noticias/81700/81727-h3.jpg"
+director: "Nia DaCosta"
+screenplay: "Alex Garland"
+photography: "Sean Bobbitt"
+music: "Hildur Guðnadóttir"
+production: "Columbia Pictures, DNA Films, Sony Pictures"
+cast: "Ralph Fiennes, Jack O'Connell, Jodie Comer, Cillian Murphy"
 ---
 
-Aquí empiezas a escribir tu opinión. **Markdown** te permite usar negritas, listas, etc.
-
-Lo que más me gustó fue la fotografía y el uso del sonido...
+Aquí empieza tu crítica de la película...

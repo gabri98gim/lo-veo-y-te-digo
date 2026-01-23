@@ -1,25 +1,152 @@
 ---
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-// 1. Importamos el tipo para que TypeScript no se queje
 import type { CollectionEntry } from "astro:content";
 
+// 1. Generamos las rutas para cada review
 export async function getStaticPaths() {
     const reviews = await getCollection("reviews");
-    // 2. Le decimos explícitamente que 'post' es una review
     return reviews.map((post: CollectionEntry<"reviews">) => ({
         params: { id: post.id },
         props: { post },
     }));
 }
 
-// 3. Definimos las Props para que VS Code sepa qué es 'post'
+// 2. Definimos qué tipos de datos esperamos
 interface Props {
     post: CollectionEntry<"reviews">;
 }
 
+// 3. Extraemos los datos de la review actual
 const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout title={`${post.data.title} - Reseña`} />
+<Layout title={`${post.data.title} - Reseña`}>
+    <article class="max-w-4xl mx-auto px-4 py-12">
+        <header class="mb-8 text-center md:text-left">
+            <span
+                class="text-cine-gold font-bold tracking-widest uppercase text-sm"
+            >
+                {post.data.tags.join(" • ")}
+            </span>
+            <h1
+                class="text-4xl md:text-6xl font-serif font-bold text-gray-900 dark:text-white mt-2 mb-4 leading-tight"
+            >
+                {post.data.title}
+            </h1>
+            <div
+                class="flex items-center justify-center md:justify-start gap-4 text-gray-500 text-sm"
+            >
+                <span>{post.data.year}</span>
+                <span>•</span>
+                <span
+                    >{
+                        post.data.duration ? `${post.data.duration} min` : ""
+                    }</span
+                >
+                <div class="text-cine-gold text-lg font-bold">
+                    {"★".repeat(Math.floor(post.data.rating))}
+                    <span class="opacity-30"
+                        >{"★".repeat(5 - Math.floor(post.data.rating))}</span
+                    >
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10">
+            <aside>
+                <div class="sticky top-8">
+                    <img
+                        src={post.data.poster}
+                        alt={`Póster de ${post.data.filmTitle}`}
+                        class="w-full rounded-lg shadow-2xl mb-8 rotate-1 hover:rotate-0 transition-transform duration-500"
+                    />
+
+                    <div
+                        class="bg-gray-50 dark:bg-gray-800 p-5 rounded-lg border-l-4 border-cine-gold text-sm text-gray-600 dark:text-gray-300 font-serif leading-relaxed shadow-sm"
+                    >
+                        <h3
+                            class="font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-3 text-xs"
+                        >
+                            Ficha Técnica
+                        </h3>
+
+                        <p class="mb-2">
+                            <strong class="text-gray-900 dark:text-white"
+                                >Título Orig:</strong
+                            >
+                            {post.data.filmTitle}
+                        </p>
+
+                        {
+                            post.data.director && (
+                                <p class="mb-2">
+                                    <strong class="text-gray-900 dark:text-white">
+                                        Dirección:
+                                    </strong>{" "}
+                                    {post.data.director}
+                                </p>
+                            )
+                        }
+
+                        {
+                            post.data.screenplay && (
+                                <p class="mb-2">
+                                    <strong class="text-gray-900 dark:text-white">
+                                        Guion:
+                                    </strong>{" "}
+                                    {post.data.screenplay}
+                                </p>
+                            )
+                        }
+
+                        {
+                            post.data.cast && (
+                                <p class="mb-2">
+                                    <strong class="text-gray-900 dark:text-white">
+                                        Reparto:
+                                    </strong>{" "}
+                                    {post.data.cast}
+                                </p>
+                            )
+                        }
+
+                        {
+                            post.data.photography && (
+                                <p class="mb-2">
+                                    <strong class="text-gray-900 dark:text-white">
+                                        Fotografía:
+                                    </strong>{" "}
+                                    {post.data.photography}
+                                </p>
+                            )
+                        }
+
+                        {
+                            post.data.production && (
+                                <p class="mt-4 text-xs opacity-80 border-t border-gray-200 dark:border-gray-700 pt-2">
+                                    <strong>Prod:</strong>{" "}
+                                    {post.data.production}
+                                </p>
+                            )
+                        }
+                    </div>
+                </div>
+            </aside>
+
+            <div
+                class="prose prose-lg dark:prose-invert prose-headings:font-serif prose-a:text-cine-gold hover:prose-a:text-yellow-600 max-w-none"
+            >
+                <Content />
+
+                <div
+                    class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between text-xs text-gray-500 uppercase tracking-widest"
+                >
+                    <span>Texto por Gabri</span>
+                    <span>{new Date().toLocaleDateString()}</span>
+                </div>
+            </div>
+        </div>
+    </article>
+</Layout>
