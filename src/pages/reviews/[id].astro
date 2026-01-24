@@ -1,152 +1,243 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import type { CollectionEntry } from "astro:content";
 
-// 1. Generamos las rutas para cada review
-export async function getStaticPaths() {
-    const reviews = await getCollection("reviews");
-    return reviews.map((post: CollectionEntry<"reviews">) => ({
-        params: { id: post.id },
-        props: { post },
-    }));
-}
-
-// 2. Definimos qué tipos de datos esperamos
 interface Props {
-    post: CollectionEntry<"reviews">;
+  post: CollectionEntry<"reviews">;
 }
 
-// 3. Extraemos los datos de la review actual
+export async function getStaticPaths() {
+  const reviews = await getCollection("reviews");
+  return reviews.map((post: CollectionEntry<"reviews">) => ({
+    params: { id: post.slug },
+    props: { post },
+  }));
+}
+
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content } = await post.render();
+
+const {
+  title,
+  filmTitle,
+  year,
+  poster,
+  description,
+  rating,
+  director,
+  cast,
+  duration,
+  platform,
+  gallery,
+} = post.data;
 ---
 
-<Layout title={`${post.data.title} - Reseña`}>
-    <article class="max-w-4xl mx-auto px-4 py-12">
-        <header class="mb-8 text-center md:text-left">
-            <span
-                class="text-cine-gold font-bold tracking-widest uppercase text-sm"
+<Layout title={title}>
+  <article class="max-w-screen-xl mx-auto px-4 py-12 animate-fade-in-up">
+    <div
+      class="grid grid-cols-1 md:grid-cols-[300px_1fr] lg:grid-cols-[350px_1fr] gap-12 items-start"
+    >
+      <aside class="hidden md:block sticky top-8 space-y-8 h-fit">
+        <div class="relative group rounded-lg overflow-hidden shadow-2xl">
+          <img
+            src={poster}
+            alt={filmTitle}
+            class="w-full object-cover aspect-[2/3]"
+            transition:name={`poster-${post.slug}`}
+          />
+        </div>
+
+        <div
+          class="bg-white dark:bg-gray-900 shadow-lg rounded-r-lg p-6 border-l-4 border-cine-gold text-sm"
+        >
+          <h3
+            class="font-serif font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-4"
+          >
+            Ficha Técnica
+          </h3>
+          <div class="space-y-3 text-gray-600 dark:text-gray-400 font-sans">
+            <p>
+              <strong class="text-gray-900 dark:text-gray-200"
+                >Título Orig:</strong
+              ><br />{filmTitle}
+            </p>
+            <p>
+              <strong class="text-gray-900 dark:text-gray-200"
+                >Dirección:</strong
+              ><br />{director}
+            </p>
+            <p>
+              <strong class="text-gray-900 dark:text-gray-200">Reparto:</strong
+              ><br /><span class="leading-relaxed block">{cast}</span>
+            </p>
+          </div>
+          <div class="w-full h-px bg-cine-gold/30 my-6"></div>
+          <div class="space-y-2">
+            <p
+              class="text-xs font-bold text-gray-500 uppercase tracking-widest"
             >
-                {post.data.tags.join(" • ")}
-            </span>
-            <h1
-                class="text-4xl md:text-6xl font-serif font-bold text-gray-900 dark:text-white mt-2 mb-4 leading-tight"
-            >
-                {post.data.title}
-            </h1>
+              Disponible en:
+            </p>
             <div
-                class="flex items-center justify-center md:justify-start gap-4 text-gray-500 text-sm"
+              class="bg-cine-black text-white px-4 py-2 text-xs font-bold uppercase tracking-wider inline-block rounded shadow-md"
             >
-                <span>{post.data.year}</span>
-                <span>•</span>
-                <span
-                    >{
-                        post.data.duration ? `${post.data.duration} min` : ""
-                    }</span
-                >
-                <div class="text-cine-gold text-lg font-bold">
-                    {"★".repeat(Math.floor(post.data.rating))}
-                    <span class="opacity-30"
-                        >{"★".repeat(5 - Math.floor(post.data.rating))}</span
-                    >
-                </div>
+              {platform || "Solo en cines"}
             </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border border-gray-100 dark:border-gray-700 text-center shadow-lg"
+        >
+          <h3
+            class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2"
+          >
+            Veredicto
+          </h3>
+          <div
+            class="text-6xl font-serif font-bold text-gray-900 dark:text-white mb-2"
+          >
+            {rating}<span class="text-2xl text-gray-400 font-sans font-light"
+              >/5</span
+            >
+          </div>
+          <div class="flex justify-center gap-1 text-cine-gold text-xl">
+            {
+              Array.from({ length: 5 }).map((_, i) => (
+                <span>{i < Math.floor(rating) ? "★" : "☆"}</span>
+              ))
+            }
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="mb-10">
+          <div
+            class="flex items-center gap-3 text-xs md:text-sm font-bold text-cine-gold uppercase tracking-widest mb-3"
+          >
+            <span>Review</span>
+            <span class="text-gray-400">•</span>
+            <span>{year}</span>
+            <span class="text-gray-400">•</span>
+            <span>{duration} min</span>
+          </div>
+
+          <h1
+            class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6 leading-tight"
+          >
+            {title}
+          </h1>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10">
-            <aside>
-                <div class="sticky top-8">
-                    <img
-                        src={post.data.poster}
-                        alt={`Póster de ${post.data.filmTitle}`}
-                        class="w-full rounded-lg shadow-2xl mb-8 rotate-1 hover:rotate-0 transition-transform duration-500"
-                    />
-
-                    <div
-                        class="bg-gray-50 dark:bg-gray-800 p-5 rounded-lg border-l-4 border-cine-gold text-sm text-gray-600 dark:text-gray-300 font-serif leading-relaxed shadow-sm"
-                    >
-                        <h3
-                            class="font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-3 text-xs"
-                        >
-                            Ficha Técnica
-                        </h3>
-
-                        <p class="mb-2">
-                            <strong class="text-gray-900 dark:text-white"
-                                >Título Orig:</strong
-                            >
-                            {post.data.filmTitle}
-                        </p>
-
-                        {
-                            post.data.director && (
-                                <p class="mb-2">
-                                    <strong class="text-gray-900 dark:text-white">
-                                        Dirección:
-                                    </strong>{" "}
-                                    {post.data.director}
-                                </p>
-                            )
-                        }
-
-                        {
-                            post.data.screenplay && (
-                                <p class="mb-2">
-                                    <strong class="text-gray-900 dark:text-white">
-                                        Guion:
-                                    </strong>{" "}
-                                    {post.data.screenplay}
-                                </p>
-                            )
-                        }
-
-                        {
-                            post.data.cast && (
-                                <p class="mb-2">
-                                    <strong class="text-gray-900 dark:text-white">
-                                        Reparto:
-                                    </strong>{" "}
-                                    {post.data.cast}
-                                </p>
-                            )
-                        }
-
-                        {
-                            post.data.photography && (
-                                <p class="mb-2">
-                                    <strong class="text-gray-900 dark:text-white">
-                                        Fotografía:
-                                    </strong>{" "}
-                                    {post.data.photography}
-                                </p>
-                            )
-                        }
-
-                        {
-                            post.data.production && (
-                                <p class="mt-4 text-xs opacity-80 border-t border-gray-200 dark:border-gray-700 pt-2">
-                                    <strong>Prod:</strong>{" "}
-                                    {post.data.production}
-                                </p>
-                            )
-                        }
-                    </div>
-                </div>
-            </aside>
-
-            <div
-                class="prose prose-lg dark:prose-invert prose-headings:font-serif prose-a:text-cine-gold hover:prose-a:text-yellow-600 max-w-none"
-            >
-                <Content />
-
-                <div
-                    class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 flex items-center justify-between text-xs text-gray-500 uppercase tracking-widest"
-                >
-                    <span>Texto por Gabri</span>
-                    <span>{new Date().toLocaleDateString()}</span>
-                </div>
-            </div>
+        <div class="md:hidden mb-8">
+          <img src={poster} class="w-full rounded-lg shadow-xl" />
         </div>
-    </article>
+
+        <div
+          class="prose prose-lg dark:prose-invert max-w-none
+                    prose-headings:font-serif prose-headings:font-bold prose-headings:text-cine-gold prose-headings:mt-8
+                    prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
+                    prose-blockquote:border-l-4 prose-blockquote:border-cine-gold prose-blockquote:pl-6 prose-blockquote:py-2 prose-blockquote:my-8 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-900/50 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:text-gray-800 dark:prose-blockquote:text-gray-200
+                    prose-img:rounded-xl prose-img:shadow-lg"
+        >
+          <Content />
+        </div>
+
+        <div
+          class="md:hidden mt-12 mb-8 p-6 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-700 text-center"
+        >
+          <h3
+            class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2"
+          >
+            Veredicto Final
+          </h3>
+          <div
+            class="text-5xl font-serif font-bold text-gray-900 dark:text-white mb-2"
+          >
+            {rating}<span class="text-xl text-gray-400 font-sans font-light"
+              >/5</span
+            >
+          </div>
+          <div class="flex justify-center gap-1 text-cine-gold text-xl">
+            {
+              Array.from({ length: 5 }).map((_, i) => (
+                <span>{i < Math.floor(rating) ? "★" : "☆"}</span>
+              ))
+            }
+          </div>
+        </div>
+
+        <div
+          class="md:hidden mb-12 bg-white dark:bg-gray-900 shadow-md rounded-lg p-6 border-t-4 border-cine-gold"
+        >
+          <h3
+            class="font-serif font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-4 text-center"
+          >
+            Datos Clave
+          </h3>
+          <div
+            class="grid grid-cols-1 gap-4 text-sm font-sans text-gray-600 dark:text-gray-400"
+          >
+            <div>
+              <span
+                class="block font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
+                >Título Original</span
+              >
+              {filmTitle}
+            </div>
+            <div>
+              <span
+                class="block font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
+                >Director</span
+              >
+              {director}
+            </div>
+            <div>
+              <span
+                class="block font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
+                >Reparto</span
+              >
+              {cast}
+            </div>
+            <div
+              class="pt-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center"
+            >
+              <span
+                class="font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
+                >Disponible:</span
+              >
+              <span
+                class="bg-cine-black text-white px-3 py-1 text-xs font-bold rounded uppercase"
+              >
+                {platform || "Consultar"}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {
+          gallery && gallery.length > 0 && (
+            <section class="mt-16">
+              <h3 class="font-serif text-2xl text-gray-900 dark:text-white mb-6 border-b border-gray-200 dark:border-gray-700 pb-2">
+                Galería
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {gallery.map((imgUrl: string) => (
+                  <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <img
+                      src={imgUrl}
+                      class="w-full h-48 object-cover transform hover:scale-105 transition duration-500"
+                      alt={`Escena de ${filmTitle}`}
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+      </main>
+    </div>
+  </article>
 </Layout>

@@ -1,37 +1,41 @@
 ---
 const { title, filmTitle, year, rating, poster, slug } = Astro.props;
+
+// TRUCO: Si el slug viene con ".md", se lo quitamos. Si no, lo deja igual.
+// Así funciona tanto si le pasas 'post.id' como 'post.slug'.
+const cleanSlug = slug ? slug.replace(/\.md$/, "") : "#";
 ---
 
-<a href={`/reviews/${slug}`} class="group flex flex-col gap-3 mb-8">
-	<div
-		class="relative w-full aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800"
-	>
-		<img
-			src={poster}
-			alt={`Imagen de ${filmTitle}`}
-			class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-		/>
+<a href={`/reviews/${cleanSlug}`} class="group flex flex-col gap-3 mb-8">
+  <div
+    class="relative w-full aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <img
+      src={poster}
+      alt={`Imagen de ${filmTitle}`}
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
 
-		<div
-			class="absolute bottom-0 right-0 bg-cine-black text-white text-xs font-bold px-2 py-1"
-		>
-			{rating}/5 ★
-		</div>
-	</div>
+    <div
+      class="absolute bottom-0 right-0 bg-cine-black text-white text-xs font-bold px-2 py-1"
+    >
+      {rating}/5 ★
+    </div>
+  </div>
 
-	<div class="flex flex-col gap-1">
-		<h3
-			class="text-lg font-bold leading-tight text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors"
-		>
-			{title}
-		</h3>
+  <div class="flex flex-col gap-1">
+    <h3
+      class="text-lg font-bold leading-tight text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors"
+    >
+      {title}
+    </h3>
 
-		<div
-			class="flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-500"
-		>
-			<span>POR GABRI</span>
-			<span class="mx-2">•</span>
-			<span>{year}</span>
-		</div>
-	</div>
+    <div
+      class="flex items-center text-[10px] font-bold uppercase tracking-widest text-gray-500"
+    >
+      <span>POR GABRI</span>
+      <span class="mx-2">•</span>
+      <span>{year}</span>
+    </div>
+  </div>
 </a>

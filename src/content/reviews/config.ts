@@ -21,6 +21,8 @@ const reviews = defineCollection({
         photography: z.string().optional(),
         cast: z.string().optional(), // Lo ponemos string para copiar y pegar la lista entera
         production: z.string().optional(),
+        gallery: z.array(z.string()).optional(),
+        platform: z.string().optional(),
     }),
 });
 

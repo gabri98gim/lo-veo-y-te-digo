@@ -1,0 +1,215 @@
+<div class="relative">
+  <button
+    id="search-trigger"
+    aria-label="Abrir búsqueda"
+    class="flex items-center justify-center p-2 text-gray-600 dark:text-gray-400 hover:text-cine-gold dark:hover:text-cine-gold transition-colors"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      class="w-6 h-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+      ></path>
+    </svg>
+  </button>
+
+  <div
+    id="search-overlay"
+    class="fixed inset-0 z-[100] bg-white dark:bg-cine-black invisible opacity-0 pointer-events-none transition-all duration-300 flex flex-col md:flex-row"
+  >
+    <button
+      id="close-search"
+      class="fixed top-6 right-8 z-[110] text-4xl text-gray-500 hover:text-red-500 transition-colors"
+    >
+      &times;
+    </button>
+
+    <div
+      class="w-full md:w-1/2 h-1/2 md:h-full flex flex-col items-center justify-center p-8 border-b md:border-b-0 md:border-r border-gray-100 dark:border-gray-800 relative"
+    >
+      <div class="w-full max-w-md">
+        <label
+          for="search-input"
+          class="block text-center text-xs font-bold tracking-[0.2em] text-gray-400 mb-6 uppercase"
+        >
+          Introduce tu búsqueda
+        </label>
+
+        <div class="relative group mb-4">
+          <input
+            type="text"
+            id="search-input"
+            class="w-full bg-transparent border-b-2 border-gray-200 dark:border-gray-700 text-3xl md:text-4xl font-serif font-bold text-center text-gray-900 dark:text-white py-4 focus:outline-none focus:border-cine-gold transition-colors placeholder-gray-300 dark:placeholder-gray-700"
+            placeholder="Escribe algo..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div id="no-results-msg" class="text-center h-8"></div>
+      </div>
+    </div>
+
+    <div
+      class="w-full md:w-1/2 h-1/2 md:h-full bg-gray-50 dark:bg-gray-900/30 overflow-y-auto p-6 md:p-12 flex items-center justify-center"
+    >
+      <div id="search-results" class="w-full max-w-xl space-y-4">
+        <div
+          id="results-placeholder"
+          class="text-center text-gray-400 opacity-50"
+        >
+          <svg
+            class="w-16 h-16 mx-auto mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1"
+              d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
+            ></path></svg
+          >
+          <p class="text-sm tracking-widest uppercase">
+            Los resultados aparecerán aquí
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import Fuse, { type FuseResult } from "fuse.js";
+
+  interface SearchItem {
+    title: string;
+    filmTitle: string;
+    slug: string;
+    year: number;
+    poster: string;
+  }
+
+  const trigger = document.getElementById("search-trigger");
+  const overlay = document.getElementById("search-overlay");
+  const closeBtn = document.getElementById("close-search");
+  const input = document.getElementById("search-input") as HTMLInputElement;
+
+  const resultsContainer = document.getElementById("search-results");
+  const noResultsMsg = document.getElementById("no-results-msg");
+  const placeholder = document.getElementById("results-placeholder");
+
+  let reviews: SearchItem[] = [];
+  let fuse: Fuse<SearchItem>;
+
+  // ABRIR (Lógica actualizada para invisible/visible)
+  const openSearch = () => {
+    // 1. Quitamos invisible y bloqueo de puntero
+    overlay?.classList.remove("invisible", "pointer-events-none");
+    // 2. Añadimos visible y activamos puntero
+    overlay?.classList.add("visible", "pointer-events-auto");
+
+    setTimeout(() => {
+      overlay?.classList.remove("opacity-0");
+      input?.focus();
+    }, 10);
+    document.body.style.overflow = "hidden";
+  };
+
+  // CERRAR (Lógica actualizada)
+  const closeSearch = () => {
+    overlay?.classList.add("opacity-0");
+
+    setTimeout(() => {
+      // Al terminar la transición, ocultamos de verdad
+      overlay?.classList.remove("visible", "pointer-events-auto");
+      overlay?.classList.add("invisible", "pointer-events-none");
+    }, 300);
+
+    document.body.style.overflow = "";
+    if (input) input.value = "";
+
+    if (resultsContainer && placeholder) {
+      resultsContainer.innerHTML = "";
+      resultsContainer.appendChild(placeholder);
+      placeholder.style.display = "block";
+    }
+    if (noResultsMsg) noResultsMsg.innerHTML = "";
+  };
+
+  trigger?.addEventListener("click", openSearch);
+  closeBtn?.addEventListener("click", closeSearch);
+
+  document.addEventListener("keydown", (e) => {
+    // Comprobamos 'invisible' en lugar de 'hidden'
+    if (e.key === "Escape" && !overlay?.classList.contains("invisible")) {
+      closeSearch();
+    }
+  });
+
+  const fetchReviews = async () => {
+    if (reviews.length === 0) {
+      const res = await fetch("/search.json");
+      reviews = await res.json();
+      fuse = new Fuse(reviews, {
+        keys: ["title", "filmTitle"],
+        includeScore: true,
+        threshold: 0.4,
+      });
+    }
+  };
+
+  if (input && resultsContainer && noResultsMsg && placeholder) {
+    input.addEventListener("input", async (e) => {
+      await fetchReviews();
+      const query = (e.target as HTMLInputElement).value;
+
+      noResultsMsg.innerHTML = "";
+
+      if (query.length > 1 && fuse) {
+        const results = fuse.search(query);
+
+        if (results.length > 0) {
+          // HAY RESULTADOS
+          placeholder.style.display = "none";
+          resultsContainer.innerHTML = results
+            .map((result) => {
+              const { item } = result;
+              return `
+                <a href="/reviews/${item.slug}" class="flex items-start gap-6 p-4 hover:bg-white dark:hover:bg-white/5 rounded-xl transition-colors group">
+                    <img src="${item.poster}" alt="${item.filmTitle}" class="w-24 md:w-32 aspect-[2/3] object-cover rounded-md shadow-lg group-hover:scale-105 transition-transform duration-300">
+                    <div class="flex-1 py-2">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 leading-tight group-hover:text-cine-gold transition-colors">${item.filmTitle}</h3>
+                        <p class="text-gray-500 dark:text-gray-400 font-mono text-sm border-l-2 border-cine-gold pl-3">${item.year}</p>
+                    </div>
+                    <div class="self-center opacity-0 group-hover:opacity-100 transition-opacity text-cine-gold">
+                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                </a>
+                `;
+            })
+            .join("");
+        } else {
+          // NO HAY RESULTADOS
+          resultsContainer.innerHTML = "";
+          noResultsMsg.innerHTML = `
+                <span class="text-cine-gold font-medium animate-pulse">
+                    No encuentro nada llamado "${query}" 😔
+                </span>
+            `;
+        }
+      } else {
+        // INPUT VACÍO
+        resultsContainer.innerHTML = "";
+        resultsContainer.appendChild(placeholder);
+        placeholder.style.display = "block";
+      }
+    });
+  }
+</script>
