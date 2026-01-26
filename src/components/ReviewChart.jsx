@@ -16,7 +16,7 @@ export default function ReviewChart({ data }) {
             </h3>
 
             <ResponsiveContainer width="100%" height="100%">
-                {/* AQUI ESTÁ EL CAMBIO: Añadido margin bottom: 40 */}
+
                 <BarChart
                     data={data}
                     margin={{

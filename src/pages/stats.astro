@@ -3,16 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import ReviewChart from "../components/ReviewChart.jsx";
 import { getCollection, type CollectionEntry } from "astro:content";
 
-// 1. OBTENER DATOS REALES
 const allReviews = await getCollection("reviews");
 
-// 2. CÁLCULOS MATEMÁTICOS
-
-// A) Total de películas
 const totalMovies = allReviews.length;
 
-// B) Nota Media
-// Añadimos tipos (acc: number, post: CollectionEntry) para calmar a TypeScript
 const totalScore = allReviews.reduce(
 	(acc: number, post: CollectionEntry<"reviews">) => acc + post.data.rating,
 	0,
@@ -20,17 +14,14 @@ const totalScore = allReviews.reduce(
 const averageRating =
 	totalMovies > 0 ? (totalScore / totalMovies).toFixed(1) : 0;
 
-// C) Horas Totales (¡NUEVO!) 🕒
 const totalMinutes = allReviews.reduce(
 	(acc: number, post: CollectionEntry<"reviews">) =>
 		acc + (post.data.duration || 0),
 	0,
 );
 
-// Convertimos a horas (redondeando)
 const totalHours = Math.round(totalMinutes / 60);
 
-// D) Datos para el Gráfico
 const chartData = [
 	{ name: "1 ★", cantidad: 0 },
 	{ name: "2 ★", cantidad: 0 },
