@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ReviewChart from "../components/ReviewChart.jsx";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
 // 1. OBTENER DATOS REALES
 const allReviews = await getCollection("reviews");
@@ -12,16 +12,21 @@ const allReviews = await getCollection("reviews");
 const totalMovies = allReviews.length;
 
 // B) Nota Media
-const totalScore = allReviews.reduce((acc, post) => acc + post.data.rating, 0);
+// Añadimos tipos (acc: number, post: CollectionEntry) para calmar a TypeScript
+const totalScore = allReviews.reduce(
+	(acc: number, post: CollectionEntry<"reviews">) => acc + post.data.rating,
+	0,
+);
 const averageRating =
 	totalMovies > 0 ? (totalScore / totalMovies).toFixed(1) : 0;
 
 // C) Horas Totales (¡NUEVO!) 🕒
-// Sumamos los minutos de cada post (si no tiene, sumamos 0)
 const totalMinutes = allReviews.reduce(
-	(acc, post) => acc + (post.data.duration || 0),
+	(acc: number, post: CollectionEntry<"reviews">) =>
+		acc + (post.data.duration || 0),
 	0,
 );
+
 // Convertimos a horas (redondeando)
 const totalHours = Math.round(totalMinutes / 60);
 
@@ -34,7 +39,7 @@ const chartData = [
 	{ name: "5 ★", cantidad: 0 },
 ];
 
-allReviews.forEach((post) => {
+allReviews.forEach((post: CollectionEntry<"reviews">) => {
 	const rating = Math.round(post.data.rating);
 	if (rating >= 1 && rating <= 5) {
 		chartData[rating - 1].cantidad += 1;

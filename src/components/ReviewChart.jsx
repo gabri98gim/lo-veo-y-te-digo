@@ -1,13 +1,10 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
-// Mantenemos los colores, eso es diseño
 const colors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e'];
 
-// AHORA: Recibimos "data" como prop (parámetro)
 export default function ReviewChart({ data }) {
 
-    // Si no hay datos (por si acaso), mostramos un aviso o array vacío
     if (!data || data.length === 0) {
         return <p className="text-center text-gray-500">Aún no hay datos suficientes.</p>;
     }
@@ -19,7 +16,16 @@ export default function ReviewChart({ data }) {
             </h3>
 
             <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
+                {/* AQUI ESTÁ EL CAMBIO: Añadido margin bottom: 40 */}
+                <BarChart
+                    data={data}
+                    margin={{
+                        top: 20,
+                        right: 30,
+                        left: 0,
+                        bottom: 40,
+                    }}
+                >
                     <XAxis
                         dataKey="name"
                         stroke="#888888"
