@@ -1,27 +1,27 @@
 ---
-title: "28 Años Después El Templo De Los Huesos: El miedo es la nueva fe"
-filmTitle: "28 Years Later: The Bone Temple"
-year: 2026
-rating: 4
-poster: "https://image.tmdb.org/t/p/original/2DTPapravB7kVBWjm6RsqEWyNqn.jpg"
-cover: "https://image.tmdb.org/t/p/original/dT1p0K1szMAUBuE2bibouDQdNb8.jpg"
-tags: ["Terror", "Infectados", "Danny Boyle", "Cillian Murphy"]
-duration: 115
+title: "Hamnet: El dolor que creó una obra maestra"
+filmTitle: "Hamnet"
+year: 2025
+rating: 5
+poster: "https://image.tmdb.org/t/p/original/hVo0g5M8z1kuhzxQ51eCbF81wUh.jpg"
+cover: "https://image.tmdb.org/t/p/original/uRDu9DiTVf97z5sj6qesmyQpYji.jpg"
+tags: ["Drama", "Chloé Zhao", "Jessie Buckley", "Paul Mescal"]
+duration: 125
 draft: false
 
-director: "Nia DaCosta"
-screenplay: "Alex Garland"
-music: "Hildur Guðnadóttir"
-photography: "Sean Bobbitt"
-production: "Columbia Pictures, DNA Films, Sony Pictures"
-cast: "Ralph Fiennes, Jack O'Connell, Jodie Comer, Cillian Murphy"
+director: "Chloé Zhao"
+screenplay: "Maggie O'Farrell, Chloé Zhao"
+music: "Max Richter"
+photography: "Lukasz Zal"
+production: "Amblin Entertainment, Amblin Partners, Book of Shadows, Hera Pictures, Neal Street Productions"
+cast: "Jessie Buckley, Paul Mescal, Jacobi Jupe, Joe Alwyn"
 platform: "Solo en Cines"
 
 gallery:
-  - "https://image.tmdb.org/t/p/original/mkQ3WNWD6Ndc9RAjsJqoc8Fhd7C.jpg"
-  - "https://image.tmdb.org/t/p/original/pYCzGcv1LrOYwiwfwRgBbSwJHSv.jpg"
-  - "https://image.tmdb.org/t/p/original/wt1GXoN9BxHLkJDAcAmu23WrmA6.jpg"
-  - "https://image.tmdb.org/t/p/original/e7ttxhrGnqb1tKGJnbolh1tBRB9.jpg"
+  - "https://image.tmdb.org/t/p/original/yt9m5CiU2MZkQoNl1kqLPODNR4t.jpg"
+  - "https://image.tmdb.org/t/p/original/a9IQXoYCpsjqTOKXRTw1osLd5il.jpg"
+  - "https://image.tmdb.org/t/p/original/ze52pV19q7b61SAB4n1Zhn2aMr3.jpg"
+  - "https://image.tmdb.org/t/p/original/2FhTapaMVUWicme53i0KRzZUl6U.jpg"
 ---
 
 El regreso de Danny Boyle y Alex Garland a la franquicia que redefinió el género zombie es todo lo que podíamos esperar y más. **28 Años Después** no solo recupera la tensión visceral de la original, sino que expande el lore con el concepto del "Templo de los Huesos", un refugio que esconde secretos peores que la propia infección.
