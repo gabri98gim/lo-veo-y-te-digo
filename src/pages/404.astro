@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="404 - Escena no encontrada | Lo veo y te digo">
+    <div
+        class="flex flex-col items-center justify-center min-h-[70vh] text-center px-4 animate-fade-in-up"
+    >
+        <div class="text-cine-gold mb-6 opacity-90">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1"
+                stroke="currentColor"
+                class="w-40 h-40 md:w-56 md:h-56"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+                ></path>
+            </svg>
+        </div>
+
+        <h1
+            class="font-serif text-6xl md:text-9xl font-bold text-gray-900 dark:text-white mb-8 tracking-tighter"
+        >
+            404
+        </h1>
+
+        <h2
+            class="text-xl md:text-3xl font-bold text-gray-500 dark:text-gray-400 uppercase tracking-[0.2em] mb-8"
+        >
+            ¡Corten! Escena Eliminada
+        </h2>
+
+        <p
+            class="text-gray-600 dark:text-gray-300 max-w-lg text-lg mb-10 leading-relaxed font-light"
+        >
+            Parece que la película que buscas se ha perdido en la sala de
+            montaje, el guion estaba incompleto o simplemente... nunca se rodó.
+        </p>
+
+        <a
+            href="/"
+            class="group inline-flex items-center gap-3 bg-cine-black text-white dark:bg-white dark:text-cine-black px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:scale-105 hover:shadow-2xl transition-all duration-300"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="w-5 h-5 group-hover:-translate-x-1 transition-transform"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
+            </svg>
+            Volver a Reviews
+        </a>
+    </div>
+</Layout>

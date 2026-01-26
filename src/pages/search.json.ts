@@ -1,15 +1,15 @@
 import { getCollection } from 'astro:content';
 
-export async function GET({}) {
+export async function GET({ }) {
   const reviews = await getCollection('reviews');
-  
+
   // CORRECCIÓN: Añadido ": any" después de post
   const searchList = reviews.map((post: any) => ({
     title: post.data.title,
     filmTitle: post.data.filmTitle,
-    slug: post.id,
+    slug: post.slug,
     year: post.data.year,
-    poster: post.data.poster, 
+    poster: post.data.poster,
   }));
 
   return new Response(JSON.stringify(searchList), {
