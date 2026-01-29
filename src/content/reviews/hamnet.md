@@ -24,18 +24,28 @@ gallery:
   - "https://image.tmdb.org/t/p/original/2FhTapaMVUWicme53i0KRzZUl6U.jpg"
 ---
 
-El regreso de Danny Boyle y Alex Garland a la franquicia que redefinió el género zombie es todo lo que podíamos esperar y más. **28 Años Después** no solo recupera la tensión visceral de la original, sino que expande el lore con el concepto del "Templo de los Huesos", un refugio que esconde secretos peores que la propia infección.
+Te lo digo ya para que no te pille de sorpresa: **prepara los pañuelos**. En serio, tenlos a mano. Hamnet no es la típica película de época ni un biopic aburrido sobre William Shakespeare y su mujer Agnes. Esto es otra cosa. Es una historia sobre una pareja y una familia real, con sus alegrías, sus problemas y, sobre todo, su dolor. Si tienes corazón, esta peli te lo va a estrujar (pero de una forma bonita).
 
 ## Lo Veo
 
-La fotografía de Sean Bobbitt captura la decadencia con una belleza inquietante. Londres ya no es una ciudad vacía, es una jungla de hormigón reclamada por la naturaleza. El uso del color amarillo enfermizo (marca de la casa) se mezcla ahora con verdes musgosos y sombras profundas. Los infectados, aunque menos protagonistas, se sienten más peligrosos: ya no son solo rabia, son parte del paisaje.
+Olvídate de los decorados de cartón piedra y la iluminación perfecta de estudio. Esto es **Chloé Zhao y Łukasz Żal** en estado puro. La peli se ve increíblemente natural, pero ojo, no porque parezca un vídeo casero, sino porque cada plano parece un cuadro.
+
+Casi todo está rodado con luz natural (o de velas), lo que le da una calidez que no se suele ver en el cine de época. Y aquí viene lo mejor: a diferencia de otras pelis modernas que abusan de la 'cámara en mano' que marea, aquí la imagen es **súper estable y elegante**. La cámara flota suavemente o se queda quieta para que disfrutes del paisaje. El diseño de producción, desde el maquillaje hasta las localizaciones, hace que la ambientación se sienta totalmente real y vivida.
 
 ## Te Digo
 
-Sinceramente, tenía miedo. Las secuelas tardías suelen ser un desastre (te miro a ti, _Matrix 4_), pero aquí hay alma. Cillian Murphy retoma su papel con una madurez aterradora, guiando a una nueva generación a través de una Gran Bretaña salvaje.
+El guión adapta la famosa novela de **Maggie O'Farrell** y el reto era difícil, pero lo han clavado. No necesitas ser un experto en Shakespeare ni haber leído Hamlet para que te llegue al corazón. Al final, la historia es universal: unos padres intentando sobrevivir a lo peor que les puede pasar.
+
+Eso sí, te soy sincero: **es una película de "fuego lento"**. No hay giros locos ni acción; es una peli de miradas, de silencios y de conversaciones en susurros. Si entras en ese ritmo, te encantará.
+
+Sobre el reparto... qué decir. **Paul Mescal y Jessie Buckley** son de otro mundo y tienen una química increíble. Jessie Buckley, en especial, se marca una actuación histórica; espero que estén grabando ya el Oscar con su nombre.
+
+Mención especial a Paul Mescal; me parece muy injusto que no esté nominado al Oscar. Como han dicho ellos mismos en varias entrevistas: sin William no habría Agnes y sin Agnes no habría William. Se necesitan el uno al otro.
+
+Es una película que habla del amor, del duelo, sí, pero también de la creación. De cómo transformamos el dolor más horrible en arte que nos ayude a sanar. Sales del cine con el corazón un poco arrugado, pero con la sensación de haber visto algo precioso.
 
 ## El Momentazo
 
-> La escena del túnel del metro, filmada en una sola toma continua de 8 minutos, donde la única luz proviene de las bengalas rojas que porta Jodie Comer. La tensión se corta con un cuchillo mientras el sonido de los pasos se acerca por todas partes. Cine de terror en estado puro.
+> La escena en la que Agnes (Jessie Buckley) ve la obra de teatro por primera vez y, de golpe, **entiende todo**. La conexión entre su hijo, su marido y lo que está pasando en el escenario, con todo el público unido entendiéndolo a la vez. Pura magia.
 
-No es solo una película de zombies, es una reflexión sobre qué pasa cuando la esperanza se vuelve fanatismo. La banda sonora de Hildur Guðnadóttir te hiela la sangre y el final... bueno, del final hablaremos mucho tiempo. Si te gustó la original, esto es un regalo.
+**¿La recomiendo?** Sin duda. Es una de esas obras que te recuerdan por qué el cine es arte y se tiene que ver en las salas. Probablemente se convierta en una de mis pelis favoritas del año, y favoritas en general.

@@ -24,18 +24,29 @@ gallery:
   - "https://image.tmdb.org/t/p/original/e7ttxhrGnqb1tKGJnbolh1tBRB9.jpg"
 ---
 
-El regreso de Danny Boyle y Alex Garland a la franquicia que redefinió el género zombie es todo lo que podíamos esperar y más. **28 Años Después** no solo recupera la tensión visceral de la original, sino que expande el lore con el concepto del "Templo de los Huesos", un refugio que esconde secretos peores que la propia infección.
+Si creías que los infectados eran el problema, espérate a ver esta segunda parte: 'El Templo de los Huesos'. La primera iba de cómo estaba el mundo **28 años después** y como era la vida de los supervivientes con los zombies.
+En esta vas a conocer a algo que da mucho más miedo que los zombies… **los humanos.**
 
 ## Lo Veo
 
-La fotografía de Sean Bobbitt captura la decadencia con una belleza inquietante. Londres ya no es una ciudad vacía, es una jungla de hormigón reclamada por la naturaleza. El uso del color amarillo enfermizo (marca de la casa) se mezcla ahora con verdes musgosos y sombras profundas. Los infectados, aunque menos protagonistas, se sienten más peligrosos: ya no son solo rabia, son parte del paisaje.
+Si en la entrega anterior vimos paisajes verdes y abiertos de una Inglaterra salvaje, aquí la cosa cambia. Esta secuela se centra en localizaciones más pequeñas y angustiosas, ya que el peso no recae tanto en la acción, sino en la tensión entre los supervivientes.
+
+Un dato curioso: ¿sabías que gran parte de la primera se grabó con iPhone 15 para darle rapidez y suciedad? Pues aquí se nota el cambio. Han vuelto a las grabaciones tradicionales con cámaras **ARRI**, lo que le da un toque mucho más fijo, cinematográfico y maduro. Le sienta genial al tono de la historia.
+
+El diseño de producción mantiene el nivelazo. Aunque repetimos escenarios (como la casa del Dr. Ian Kelson), las nuevas localizaciones del templo están muy conseguidas. Y ojo al **CGI y los efectos prácticos**: siguen siendo invisibles y realistas, con mención especial al equipo de maquillaje. Los infectados dan asco, y eso es bueno.
 
 ## Te Digo
 
-Sinceramente, tenía miedo. Las secuelas tardías suelen ser un desastre (te miro a ti, _Matrix 4_), pero aquí hay alma. Cillian Murphy retoma su papel con una madurez aterradora, guiando a una nueva generación a través de una Gran Bretaña salvaje.
+El guión retoma la historia exactamente donde lo dejamos, manteniendo la dupla de dirección y escritura: **Alex Garland y Nia DaCosta**. Se nota que saben lo que hacen: no hay agujeros de trama raros, cierran lo que dejaron abierto y expanden lo que interesaba.
+
+Eso sí, te aviso: **el ritmo es más lento**. Si buscas acción frenética tipo videojuego, igual esta te frena un poco. A mí no se me hizo larga porque la tensión te mantiene pegado, pero es una peli de "cocción lenta".
+
+En el reparto, **Ralph Fiennes** se come la pantalla. Su personaje ya prometía en la primera, pero aquí lo desarrollan de lujo. También destacan Jack O’Connell y Alfie Williams, que aguantan el tipo perfectamente.
+
+Lo más interesante es el mensaje. Como en todo buen apocalipsis, los infectados pasan a segundo plano para recordarnos que **los humanos, llevados al límite, son el verdadero peligro**. La película habla de la fe, de a qué nos agarramos cuando lo hemos perdido todo y de las locuras que somos capaces de hacer por religión.
 
 ## El Momentazo
 
-> La escena del túnel del metro, filmada en una sola toma continua de 8 minutos, donde la única luz proviene de las bengalas rojas que porta Jodie Comer. La tensión se corta con un cuchillo mientras el sonido de los pasos se acerca por todas partes. Cine de terror en estado puro.
+> La escena del **ritual final** en el Templo de los Huesos. No digo más, pero os aviso: hay mucho fuego y se os va a quedar grabada en la retina.
 
-No es solo una película de zombies, es una reflexión sobre qué pasa cuando la esperanza se vuelve fanatismo. La banda sonora de Hildur Guðnadóttir te hiela la sangre y el final... bueno, del final hablaremos mucho tiempo. Si te gustó la original, esto es un regalo.
+**¿La recomiendo?** Definitivamente. Aunque sea más pausada, me ha gustado más que la anterior por la profundidad de la trama y el duelo de actores.
