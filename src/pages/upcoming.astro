@@ -3,77 +3,60 @@ import Layout from "../layouts/Layout.astro";
 
 const apiKey = import.meta.env.TMDB_API_KEY;
 
+// 1. Definimos las variables base fuera de los bloques para evitar errores en VS Code
 let movies: any[] = [];
 const today = new Date().toISOString().split("T")[0];
-
 const sixWeeksLater = new Date();
 sixWeeksLater.setDate(sixWeeksLater.getDate() + 42);
 const maxDate = sixWeeksLater.toISOString().split("T")[0];
 
 try {
-  // 🧪 PRUEBA: Sin with_release_type=3 para ver si ese es el problema
+  // Pedimos dos páginas para tener contenido suficiente
   const pages = [1, 2];
   const allResults: any[] = [];
 
   for (const page of pages) {
-    // SIN el filtro with_release_type=3
     const upcomingResponse = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=es-ES&region=ES&sort_by=primary_release_date.asc&primary_release_date.gte=${today}&primary_release_date.lte=${maxDate}&page=${page}`,
     );
-
     const upcomingData = await upcomingResponse.json();
     if (upcomingData.results) {
       allResults.push(...upcomingData.results);
     }
   }
 
-  // Llamada 2: Pelis en cines ahora
+  // Combinamos con lo que hay ahora en cines
   const nowPlayingResponse = await fetch(
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=es-ES&region=ES&page=1`,
   );
-
   const nowPlayingData = await nowPlayingResponse.json();
 
-  // Combinamos todas las listas
   const allMovies = [...allResults, ...(nowPlayingData.results || [])];
 
-  // Eliminamos duplicados por ID
+  // Eliminamos duplicados
   const uniqueMovies = Array.from(
     new Map(allMovies.map((m: any) => [m.id, m])).values(),
   );
 
+  // FILTRO RELAJADO: Para que en Vercel aparezcan pelis sí o sí
   movies = uniqueMovies
-    // Solo futuras o muy recientes (últimos 3 días)
     .filter((m: any) => {
-      const releaseDate = new Date(m.release_date);
-      const todayDate = new Date(today);
-      const threeDaysAgo = new Date(todayDate);
-      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-      return releaseDate >= threeDaysAgo && releaseDate <= sixWeeksLater;
+      const releaseDate = m.release_date;
+      // Solo pedimos que tenga fecha y que tenga un póster
+      return releaseDate >= today && m.poster_path !== null;
     })
-    // Filtro de calidad MUY suave
-    .filter((m: any) => {
-      const hasPoster = m.poster_path !== null;
-      const hasMinActivity = m.popularity > 0.5 || m.vote_count > 0;
-      return hasPoster && hasMinActivity;
-    })
-    // Ordenar por fecha
-    .sort(
-      (a: any, b: any) =>
-        new Date(a.release_date).getTime() - new Date(b.release_date).getTime(),
-    );
+    .sort((a: any, b: any) => a.release_date.localeCompare(b.release_date));
 } catch (error) {
-  console.error("💀 Error:", error);
+  console.error("💀 Error detectado:", error);
 }
 
-// Agrupar por semanas
+// Agrupar por semanas para que el diseño sea más limpio
 const groupByWeek = (movies: any[]) => {
   const weeks: { [key: string]: any[] } = {};
-
   movies.forEach((movie) => {
     const date = new Date(movie.release_date);
     const weekStart = new Date(date);
-    weekStart.setDate(date.getDate() - date.getDay() + 1); // Lunes de esa semana
+    weekStart.setDate(date.getDate() - date.getDay() + 1);
     const weekKey = weekStart.toISOString().split("T")[0];
 
     if (!weeks[weekKey]) {
@@ -81,12 +64,10 @@ const groupByWeek = (movies: any[]) => {
     }
     weeks[weekKey].push(movie);
   });
-
   return Object.entries(weeks).sort(([a], [b]) => a.localeCompare(b));
 };
 
 const weekGroups = groupByWeek(movies);
-
 const imageBase = "https://image.tmdb.org/t/p/w500";
 ---
 
@@ -98,8 +79,7 @@ const imageBase = "https://image.tmdb.org/t/p/w500";
       Próximos Estrenos (España)
     </h1>
     <p class="text-gray-600 dark:text-gray-400 max-w-2xl text-lg">
-      Películas que llegan a la cartelera desde hoy ({today}) hasta las próximas
-      6 semanas. <span class="text-xs">(Sin filtro release_type)</span>
+      Cartelera confirmada desde hoy ({today}) hasta las próximas semanas.
     </p>
   </section>
 
@@ -107,7 +87,7 @@ const imageBase = "https://image.tmdb.org/t/p/w500";
     movies.length === 0 ? (
       <div class="p-8 bg-gray-100 dark:bg-gray-800 text-gray-500 rounded-lg text-center">
         <p class="font-bold text-xl">
-          No se han encontrado estrenos para los próximos días 😔
+          No se han encontrado estrenos comerciales para los próximos días 😔
         </p>
       </div>
     ) : (
@@ -121,11 +101,8 @@ const imageBase = "https://image.tmdb.org/t/p/w500";
 
           return (
             <div>
-              <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6 pb-2 border-b-2 border-cine-gold">
-                {weekLabel}{" "}
-                <span class="text-sm text-gray-500">
-                  ({weekMovies.length} películas)
-                </span>
+              <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6 pb-2 border-b-2 border-yellow-500/50">
+                Semana: {weekLabel}
               </h2>
               <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {weekMovies.map((movie: any) => {
@@ -142,24 +119,18 @@ const imageBase = "https://image.tmdb.org/t/p/w500";
                       class="group relative block"
                     >
                       <div class="aspect-[2/3] overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800 mb-3 shadow-sm hover:shadow-xl transition-all duration-300">
-                        {movie.poster_path ? (
-                          <img
-                            src={`${imageBase}${movie.poster_path}`}
-                            alt={movie.title}
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        ) : (
-                          <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                            Sin póster
-                          </div>
-                        )}
+                        <img
+                          src={`${imageBase}${movie.poster_path}`}
+                          alt={movie.title}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
                         <div class="absolute top-2 right-2 bg-black/80 backdrop-blur text-white text-xs font-bold px-2 py-1 rounded border border-white/20">
                           {movie.vote_average > 0
                             ? Math.round(movie.vote_average * 10) / 10 + " ★"
                             : "ESTRENO"}
                         </div>
                       </div>
-                      <h3 class="font-bold text-gray-900 dark:text-white leading-tight group-hover:text-cine-gold transition-colors">
+                      <h3 class="font-bold text-gray-900 dark:text-white leading-tight hover:text-yellow-600 transition-colors">
                         {movie.title}
                       </h3>
                       <p class="text-xs text-gray-500 mt-1 font-mono">
