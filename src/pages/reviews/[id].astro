@@ -12,7 +12,7 @@ interface Props {
 export async function getStaticPaths() {
   const reviews = await getCollection("reviews");
   return reviews.map((post: CollectionEntry<"reviews">) => ({
-    params: { id: post.id }, // Usamos .id
+    params: { id: post.id.replace(/\.md$/, "") }, // Fix: Remove .md extension
     props: { post },
   }));
 }
