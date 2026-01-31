@@ -1,5 +1,8 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+export const prerender = true;
+
+// 1. IMPORTANTE: Añadimos 'render' a los imports
+import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
 interface Props {
@@ -9,13 +12,15 @@ interface Props {
 export async function getStaticPaths() {
   const reviews = await getCollection("reviews");
   return reviews.map((post: CollectionEntry<"reviews">) => ({
-    params: { id: post.slug },
+    params: { id: post.id }, // Usamos .id
     props: { post },
   }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+
+// 2. IMPORTANTE: Usamos la función render(post) en lugar de post.render()
+const { Content } = await render(post);
 
 const {
   title,
@@ -42,7 +47,7 @@ const {
             src={poster}
             alt={filmTitle}
             class="w-full object-cover aspect-[2/3] transform transition-all duration-500 hover:scale-110 hover:rotate-2"
-            transition:name={`poster-${post.slug}`}
+            transition:name={`poster-${post.id}`}
           />
           <div
             class="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 pointer-events-none"
@@ -119,13 +124,10 @@ const {
           <div
             class="flex items-center gap-3 text-xs md:text-sm font-bold text-cine-gold uppercase tracking-widest mb-3"
           >
-            <span>Review</span>
-            <span class="text-gray-400">•</span>
-            <span>{year}</span>
-            <span class="text-gray-400">•</span>
+            <span>Review</span><span class="text-gray-400">•</span>
+            <span>{year}</span><span class="text-gray-400">•</span>
             <span>{duration} min</span>
           </div>
-
           <h1
             class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6 leading-tight"
           >
@@ -138,11 +140,7 @@ const {
         </div>
 
         <div
-          class="prose prose-lg dark:prose-invert max-w-none
-                    prose-headings:font-serif prose-headings:font-bold prose-headings:text-cine-gold prose-headings:mt-8
-                    prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed
-                    prose-blockquote:border-l-4 prose-blockquote:border-cine-gold prose-blockquote:pl-6 prose-blockquote:py-2 prose-blockquote:my-8 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-900/50 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:text-gray-800 dark:prose-blockquote:text-gray-200
-                    prose-img:rounded-xl prose-img:shadow-lg"
+          class="prose prose-lg dark:prose-invert max-w-none prose-headings:font-serif prose-headings:font-bold prose-headings:text-cine-gold prose-headings:mt-8 prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-blockquote:border-l-4 prose-blockquote:border-cine-gold prose-blockquote:pl-6 prose-blockquote:py-2 prose-blockquote:my-8 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-900/50 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-xl prose-blockquote:text-gray-800 dark:prose-blockquote:text-gray-200 prose-img:rounded-xl prose-img:shadow-lg"
         >
           <Content />
         </div>
@@ -168,54 +166,6 @@ const {
                 <span>{i < Math.floor(rating) ? "★" : "☆"}</span>
               ))
             }
-          </div>
-        </div>
-
-        <div
-          class="md:hidden mb-12 bg-white dark:bg-gray-900 shadow-md rounded-lg p-6 border-t-4 border-cine-gold"
-        >
-          <h3
-            class="font-serif font-bold text-gray-900 dark:text-white uppercase tracking-widest mb-4 text-center"
-          >
-            Datos Clave
-          </h3>
-          <div
-            class="grid grid-cols-1 gap-4 text-sm font-sans text-gray-600 dark:text-gray-400"
-          >
-            <div>
-              <span
-                class="block font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
-                >Título Original</span
-              >
-              {filmTitle}
-            </div>
-            <div>
-              <span
-                class="block font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
-                >Director</span
-              >
-              {director}
-            </div>
-            <div>
-              <span
-                class="block font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
-                >Reparto</span
-              >
-              {cast}
-            </div>
-            <div
-              class="pt-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center"
-            >
-              <span
-                class="font-bold text-gray-900 dark:text-gray-200 uppercase text-xs"
-                >Disponible:</span
-              >
-              <span
-                class="bg-cine-black text-white px-3 py-1 text-xs font-bold rounded uppercase"
-              >
-                {platform || "Consultar"}
-              </span>
-            </div>
           </div>
         </div>
 
